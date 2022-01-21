@@ -1,5 +1,7 @@
 var express = require('express');  
 var app = express();  
+
+let port=process.env.port || 8080
   
 app.get('/GetName', function (req, res) {  
     response = {  
@@ -24,6 +26,6 @@ response = {
    console.log(response);  
    res.end(JSON.stringify(response));  
 })  
-app.listen(process.env.port,()=>{
-console.log('Example port app is listening on port http://localhost:'+process.env.port );
+app.listen(port,()=>{
+console.log('Example port app is listening on port http://localhost:'+port );
 });
