@@ -2,8 +2,6 @@ var express = require('express');
 var app = express();  
 
 let port=process.env.port||3000
-
-app.use(express. static('public'));
   
 app.get('/GetName', function (req, res) {  
     response = {  
