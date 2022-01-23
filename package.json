@@ -1,15 +1,14 @@
 {
   "dependencies": {
-    "express": "^4.17.2"
+    "express": "^4.17.2",
+    "pg": "^8.7.1"
   },
-
   "name": "node-example",
   "version": "1.0.0",
   "description": "This example is so cool.",
   "main": "app.js",
   "scripts": {
-"test": "echo \"Error no test spcecified\" && exit ",
-"start": "node app.js"
+    "test": "echo \"Error no test spcecified\" && exit ",
+    "start": "node app.js"
   }
-
 }
