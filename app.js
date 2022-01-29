@@ -1,52 +1,65 @@
-var express = require('express');  
-var app = express();  
-const { Pool, Client } = require("pg");
+var express = require('express');
+var app = express();
+const Request = require('request');
 
-let port=process.env.PORT || 8080
-  
+app.use(express.json());
 
-
-const pool = new Pool({
-  user: "wdtbriosumbzdw",
-  host: "ec2-3-212-143-188.compute-1.amazonaws.com",
-  database: "dldbbq36aick2",
-  password: "2af39b6f55c05ca135d5ae63c709d6e3718b554e9ce4f37c7c8db6336f79b823",
-  port: "5432"
-});
+let port = process.env.PORT || 8080
 
 
+app.get('/GetName', function (req, res) {
+    response = {
+        first_name: 'Rajavelu',
+    };
 
-app.get('/GetName', function (req, res) {  
-    response = {  
-        first_name:'Rajavelu',  
-    };  
- 
-    console.log(response);  
-    res.end(JSON.stringify(response));  
-})  
+    console.log(response);
+    res.end(JSON.stringify(response));
+})
 
 app.get('/', (req, res) => {
     res.send('Welcome to Edurekas REST API with Node.js Tutorial!!');
+});
+
+
+app.get('/GetFullName', function (req, res) {
+    response = {
+        first_name: 'Rajavelu',
+        last_name: 'Palanivel'
+    };
+
+    console.log(response);
+    res.end(JSON.stringify(response));
+})
+app.listen(port, () => {
+    console.log('Example port app is listening on port http://localhost:' + port);
+});
+
+app.post('/api', function (req,res){
+
+console.log("BODY:"+req.body);
+
+res.status(201).json(req.body);
+
+});
+
+
+app.post('/api/channels', async function (req, resOut) {
+
+    console.log("Body:" + JSON.stringify(req.body));
+    Request.post({
+        "headers": {
+            "Content-Type": "application/json",
+            "api-key": "WXNDC2OfhluWCsmpjsjrX5uA7nA16PPIy3h5ty7X83B4SFutHpHjTVLjNw21SkU8"
+        },
+        "url": "https://data.mongodb-api.com/app/data-mlytw/endpoint/data/beta/action/insertOne",
+        "body": JSON.stringify(req.body)
+    }, (error, response, body) => {
+        if (error) { console.log("Error message is: " + error) }
+        else {
+            console.log("The Response is: " + JSON.stringify(body));
+            resOut.status(201).json(body);
+        }
     });
 
-
-app.get('/GetFullName', function (req, res) {  
-response = {  
-       first_name:'Rajavelu',  
-       last_name:'Palanivel'  
-   };  
-   
-   pool.query(
-    "CREATE TABLE LoginDetails (user_id serial PRIMARY KEY, username VARCHAR ( 50 )  NOT NULL,password VARCHAR ( 50 ) NOT NULL);",
-    (err, res) => {
-      console.log(err, res);
-      pool.end();
-    }
-  );
-
-   console.log(response);  
-   res.end(JSON.stringify(response));  
-})  
-app.listen(port,()=>{
-console.log('Example port app is listening on port http://localhost:'+port );
+    resOut.status(201).json(req.body);
 });
